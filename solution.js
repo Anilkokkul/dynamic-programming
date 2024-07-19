@@ -24,3 +24,20 @@ Constraints:
 1 <= coins[i] <= 2^31 - 1
 0 <= amount <= 10^4
  */
+//Solution for Q.1
+
+let coins = [1, 2, 5];
+let amount = 11;
+//output = 3
+console.log(coinChange(coins, amount));
+
+function coinChange(coins, amount) {
+  let dp = Array(amount + 1).fill(Infinity);
+  dp[0] = 0;
+  for (let coin of coins) {
+    for (let x = coin; x <= amount; x++) {
+      dp[x] = Math.min(dp[x], dp[x - coin] + 1);
+    }
+  }
+  return dp[amount] === Infinity ? -1 : dp[amount];
+}
