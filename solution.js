@@ -44,3 +44,55 @@ function coinChange(coins, amount) {
   }
   return dp[amount] === 0 ? -1 : dp[amount];
 }
+
+/**
+ * Question 2
+Problem Description:
+Given a string `s`, return the longest palindromic substring in `s`.
+Input Description:
+A string `s`.
+Output Description:
+The longest palindromic substring in `s`.
+Examples:
+**Example 1:**
+- Input: `s = "babad"`
+- Output: `"bab"`
+- Explanation: `"aba"` is also a valid answer.
+**Example 2:**
+- Input: `s = "cbbd"`
+- Output: `"bb"`
+Constraints:
+1 <= s.length <= 1000
+s consists of only digits and English letters.
+ */
+
+const s = "babad";
+console.log(longestPalindrome(s));
+
+function longestPalindrome(s) {
+  let n = s.length;
+  let dp = Array.from({ length: n }, () => Array(n).fill(false));
+  let max = 0;
+  let start = 0;
+  for (let i = 0; i < n; i++) {
+    dp[i][i] = true;
+  }
+  for (let i = 0; i < n - 1; i++) {
+    if (s[i] === s[i + 1]) {
+      dp[i][i + 1] = true;
+      max = 2;
+      start = i;
+    }
+  }
+  for (let i = 3; i <= n; i++) {
+    for (let j = 0; j < n - i + 1; j++) {
+      let k = j + i - 1;
+      if (dp[j + 1][k - 1] && s[j] === s[k]) {
+        dp[j][k] = true;
+        max = i;
+        start = j;
+      }
+    }
+  }
+  return s.slice(start, start + max);
+}
