@@ -13,6 +13,7 @@ Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].
  */
 const nums = [2, 7, 11, 15];
 const target = 9;
+//output = [0,1]
 console.log(twoSum(nums, target));
 
 function twoSum(nums, target) {
@@ -26,3 +27,29 @@ function twoSum(nums, target) {
   }
   return [-1, -1];
 }
+
+/***
+ * Question 2: Group Anagrams
+Given an array of strings strs, group the anagrams together. You can return the answer in any order.
+An  Anagram  is  a  word  or  phrase  formed  by  rearranging  the  letters  of  a  different  word  or  phrase,
+typically using all the original letters exactly once.
+Example:
+Input: strs = ["eat","tea","tan","ate","nat","bat"]
+Output: [["bat"],["nat","tan"],["ate","eat","tea"]]
+ */
+const strs = ["eat", "tea", "tan", "ate", "nat", "bat"];
+//Output: [["bat"],["nat","tan"],["ate","eat","tea"]]
+
+const groupAnagrams = (strs) => {
+  const map = new Map();
+  for (let str of strs) {
+    const sortedStr = str.split("").sort().join("");
+
+    if (!map.has(sortedStr)) {
+      map.set(sortedStr, []);
+    }
+    map.get(sortedStr).push(str);
+  }
+  return [...map.values()];
+};
+console.log(groupAnagrams(strs));
